@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PS-Project</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+</head>
+<body>
+    <header class="App-header">
+        <nav>
+        <a href="/write">Set String</a>
+        <a href="/retrieve">Get String</a>
+        </nav>
+    </header>
+    <main>
+        <h1>POOLSIDE INTERVIEW TECHNICAL PROJECT</h1>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='bmoSnail.png') }}" alt="My Picture" />
+        </div>
+    </main>
+</body>
+</html>

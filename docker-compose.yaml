@@ -1,0 +1,49 @@
+services:
+
+  frontend-api:
+    build: ./frontend-api
+    ports:
+      - "5000:5000"
+    environment:
+      DB_API_URL: http://db-api:8000
+      FLASK_ENV: development
+    volumes:
+      - ./frontend-api:/app
+    depends_on:
+      - db-api
+
+  db-api:
+    build: ./db-api
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_HOST:     postgres
+      POSTGRES_PORT:     5432
+      POSTGRES_DB:       mydb
+      POSTGRES_USER:     myuser
+      POSTGRES_PASSWORD: mypassword
+      FLASK_ENV:         development
+    volumes:
+      - ./db-api:/app
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB:       mydb
+      POSTGRES_USER:     myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myuser -d mydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

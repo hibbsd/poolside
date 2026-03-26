@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PS-Project</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.png') }}" type="image/png" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"/>
+</head>
+<body>
+    <header class="App-header">
+        <nav>
+        <a href="/">Home</a>
+        <a href="/write">Save String</a>
+        </nav>
+    </header>
+    <main>
+    {% if request.args.get("value") %}
+    <div class="popup-overlay" onclick="this.style.display='none'">
+        <div class="popup">
+            <h3>Retrieved Value</h3>
+            <p><strong>Key:</strong> {{ request.args.get("key") }}</p>
+            <p><strong>Value:</strong> {{ request.args.get("value") }}</p>
+            <button onclick="document.querySelector('.popup-overlay').style.display='none'">
+                Close
+            </button>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if request.args.get("error") %}
+        <div class="alert error">{{ request.args.get("error") }}</div>
+    {% endif %}
+        <div class="forms-container">
+            <form action="/retrieve/submit" method="post">
+            <h2>User Information</h2><br/>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="skey">String Key:</label>
+                        <input type="text" id="skey" name="skey" required />
+                    </div>
+                </div>
+                <button type="submit">Go get it!</button>
+            </form>         
+        </div>
+    </main>
+</body>
+</html>
